@@ -1,3 +1,4 @@
+<img width="2562" height="2167" alt="image" src="https://github.com/user-attachments/assets/a4ea4504-c77f-4e3b-aa96-1bf5e95b1652" />
 # Let's Hang - Event Flyer Creation Webapp
 
 A Next.js application for creating and customizing event flyers with real-time preview, form management, draft saving, and event publishing capabilities.
