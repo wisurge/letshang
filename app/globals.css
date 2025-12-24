@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --fills-tertiary: #6B7280;
+  --input-background: #5B5B5B;
+  
+  /* Reusable color values */
+  --input-bg: rgba(37, 37, 37, 0.55);
+  --input-bg-dark: rgba(28, 28, 28, 0.4);
+  --button-bg: rgba(98, 96, 126, 0.6);
+  --button-bg-hover: rgba(98, 96, 126, 0.75);
+  
+  /* Dynamic gradient colors - updated by BackgroundSync component */
+  --gradient-color-1: #667eea;
+  --gradient-color-2: #764ba2;
+  --gradient-color-3: #f093fb;
+  --gradient-color-1-rgba: rgba(102, 126, 234, 0.4);
+  --gradient-color-2-rgba: rgba(118, 75, 162, 0.4);
+  --gradient-color-3-rgba: rgba(240, 147, 251, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'), local('SFProDisplay-Regular');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display Bold'), local('SFProDisplay-Bold');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  color: var(--foreground);
+  background: 
+    radial-gradient(circle at 20% 50%, var(--gradient-color-2-rgba) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, var(--gradient-color-3-rgba) 0%, transparent 50%),
+    linear-gradient(135deg, var(--gradient-color-1) 0%, var(--gradient-color-2) 50%, var(--gradient-color-3) 100%);
+  min-height: 100vh;
+  background-attachment: fixed;
+  position: relative;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Inputs should be transparent to show container background */
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+textarea {
+  background: transparent;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .shadow-soft {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .shadow-soft-lg {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-soft-xl {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* 
+   * REUSABLE STYLES FOR INPUTS AND BUTTONS
+   * 
+   * Usage:
+   * 
+   * 1. Input Containers:
+   *    Use "material-ultrathin" class for input container divs
+   *    Input fields should have "bg-transparent" to show container background
+   * 
+   * 2. Card Backgrounds:
+   *    Use "card-background" class for card containers (darker variant)
+   * 
+   * 3. Translucent Buttons:
+   *    Use "btn-translucent" class for translucent buttons
+   * 
+   * 4. Input Fields:
+   *    Use "input-field" class for base input styling
+   *    Always combine with "bg-transparent" to show container background
+   */
+  
+  /* Materials/Ultrathin - Very thin translucent material for input containers */
+  .material-ultrathin {
+    background: var(--input-bg);
+    backdrop-filter: saturate(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+  }
+  
+  .material-ultrathin:hover,
+  .material-ultrathin-hover {
+    background: var(--input-bg);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  
+  /* Card background - darker variant for cards */
+  .card-background {
+    background: var(--input-bg-dark);
+    backdrop-filter: saturate(1.1);
+  }
+  
+  /* Translucent button - reusable button style */
+  .btn-translucent {
+    background-color: var(--button-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-translucent:hover {
+    background-color: var(--button-bg-hover);
+  }
+  
+  /* Input field base styles */
+  .input-field {
+    background: transparent;
+    color: white;
+  }
+  
+  .input-field::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-rotate {
+  animation: borderRotate 3s linear infinite;
+  background-size: 200% 200%;
+}
+
+/* React DatePicker Custom Styles - Matching Ultrathin Material Theme */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.react-datepicker__input-container input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Ensure datepicker popper is always on top */
+.react-datepicker-popper {
+  z-index: 99999 !important;
+}
+
+/* Override any parent stacking contexts */
+.react-datepicker-popper[style*="z-index"] {
+  z-index: 99999 !important;
+}
+
+/* Ensure the datepicker container is also on top */
+.react-datepicker-popper .react-datepicker {
+  z-index: 99999 !important;
+  position: relative;
+}
+
+.react-datepicker {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+}
+
+.react-datepicker__header {
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px 16px 0 0;
+  padding-top: 12px;
+}
+
+.react-datepicker__current-month {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 15px;
+  padding-bottom: 8px;
+}
+
+.react-datepicker__day-name {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.react-datepicker__day {
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.react-datepicker__day:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+}
+
+.react-datepicker__day--selected {
+  background: rgba(59, 130, 246, 0.6);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.react-datepicker__day--selected:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+.react-datepicker__day--keyboard-selected {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+}
+
+.react-datepicker__day--today {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.react-datepicker__day--disabled {
+  color: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+}
+
+.react-datepicker__day--outside-month {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.react-datepicker__navigation {
+  top: 12px;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: rgba(255, 255, 255, 0.7);
+  border-width: 2px 2px 0 0;
+}
+
+.react-datepicker__navigation:hover *::before {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.react-datepicker__time-container .react-datepicker__time {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 16px 16px 0;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+  border-radius: 0 16px 16px 0;
+}
+
+.react-datepicker__time-list-item {
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: 2px 4px;
+}
+
+.react-datepicker__time-list-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.react-datepicker__time-list-item--selected {
+  background: rgba(59, 130, 246, 0.6);
+  color: white;
+  font-weight: 600;
+}
+
+.react-datepicker__time-list-item--disabled {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.react-datepicker__month-container {
+  background: transparent;
+}
+
+.react-datepicker__month {
+  margin: 8px;
+  background: transparent;
+}
+
+.react-datepicker__week {
+  background: transparent;
+}
+
+/* Ensure description and button groups don't interfere with datepicker */
+[style*="z-index: -1"] {
+  z-index: -1 !important;
+}
+
